@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ExamplesViewBase xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QSF.Views"
+             xmlns:controls="clr-namespace:QSF.Controls"
+             xmlns:telerikListView="clr-namespace:Telerik.XamarinForms.DataControls.ListView;assembly=Telerik.XamarinForms.DataControls"
+             xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls"
+             xmlns:telerikCommands="clr-namespace:Telerik.XamarinForms.DataControls.ListView.Commands;assembly=Telerik.XamarinForms.DataControls"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Name="page"
+             BackgroundColor="{StaticResource Key=DarkBackgroundColor}"
+             x:Class="QSF.Views.ControlExamplesView">
+
+    <telerikDataControls:RadListView x:Name="examplesList" ItemsSource="{Binding Path=Examples}" SelectedItem="{Binding Path=SelectedExample, Mode=TwoWay}"
+                                     AutomationId="ExamplesListView">
+        <telerikDataControls:RadListView.Margin>
+            <OnPlatform x:TypeArguments="Thickness">
+                <On Platform="Android" Value="6, 6, 12, 6" />
+                <On Platform="iOS" Value="12" />
+                <On Platform="UWP" Value="-12, 6, 0, 0" />
+            </OnPlatform>
+        </telerikDataControls:RadListView.Margin>
+        <telerikDataControls:RadListView.Commands>
+            <telerikCommands:ListViewUserCommand Id="GroupHeaderTap" Command="{Binding GroupHeaderTapCommand}" />
+        </telerikDataControls:RadListView.Commands>
+        <telerikDataControls:RadListView.GroupDescriptors>
+            <telerikListView:PropertyGroupDescriptor PropertyName="GroupName" SortOrder="Descending"/>
+        </telerikDataControls:RadListView.GroupDescriptors>
+        <telerikDataControls:RadListView.LayoutDefinition>
+          <telerikListView:ListViewGridLayout GroupHeaderLength="48" HorizontalItemSpacing="12" VerticalItemSpacing="12">
+              <telerikListView:ListViewGridLayout.GroupHeaderLength>
+                  <OnPlatform x:TypeArguments="x:Double">
+                      <On Platform="UWP" Value="30" />
+                      <On Platform="iOS, Android" Value="48" />
+                  </OnPlatform>
+              </telerikListView:ListViewGridLayout.GroupHeaderLength>
+              <telerikListView:ListViewGridLayout.ItemLength>
+                  <OnPlatform x:TypeArguments="x:Double">
+                      <On Platform="UWP" Value="260" />
+                      <On Platform="iOS, Android" Value="235" />
+                  </OnPlatform>
+              </telerikListView:ListViewGridLayout.ItemLength>
+          </telerikListView:ListViewGridLayout>
+        </telerikDataControls:RadListView.LayoutDefinition>
+        <telerikDataControls:RadListView.GroupHeaderTemplate>
+            <DataTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="6, 0" />
+                            <On Platform="iOS" Value="12, 0" />
+                            <On Platform="UWP" Value="24, 0" />
+                        </OnPlatform>
+                    </Grid.Margin>
+                    <Grid IsVisible="{Binding BindingContext.CanCollapseGroups, Source={x:Reference examplesList}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="24" />
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="0"
+                               HorizontalOptions="Center"
+                               Text="{StaticResource ExpandedIcon}"
+                               Style="{StaticResource IconLabelStyle}"
+                               BackgroundColor="{StaticResource DarkBackgroundColor}"
+                               IsVisible="{Binding IsExpanded}">
+                            <Label.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="Android" Value="0, 14, 0, 0" />
+                                    <On Platform="iOS" Value="0, 4, 0, 0" />
+                                    <On Platform="UWP" Value="0, 8, 0, 0" />
+                                </OnPlatform>
+                            </Label.Margin>
+                        </Label>
+                        <Label Margin="0"
+                               HorizontalOptions="Center"
+                               Text="{StaticResource CollapsedIcon}"
+                               Style="{StaticResource IconLabelStyle}"
+                               BackgroundColor="{StaticResource DarkBackgroundColor}"
+                               IsVisible="{Binding IsExpanded, Converter={StaticResource InvertedBooleanConverter}}">
+                            <Label.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="Android" Value="0, 14, 0, 0" />
+                                    <On Platform="iOS" Value="0, 4, 0, 0" />
+                                    <On Platform="UWP" Value="0, 8, 0, 0" />
+                                </OnPlatform>
+                            </Label.Margin>
+                        </Label>
+                    </Grid>
+                    <Label Grid.Column="1"
+                           Margin="0"
+                           Text="{Binding Key}"
+                           Style="{StaticResource HeaderLabelStyle}"
+                           BackgroundColor="{StaticResource DarkBackgroundColor}">
+                        <Label.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="Android" Value="0, 12, 0, 0" />
+                                <On Platform="iOS" Value="0, 2, 0, 0" />
+                                <On Platform="UWP" Value="0, 6, 0, 0" />
+                            </OnPlatform>
+                        </Label.Margin>
+                    </Label>
+                </Grid>
+            </DataTemplate>
+        </telerikDataControls:RadListView.GroupHeaderTemplate>
+        <telerikDataControls:RadListView.ItemTemplate>
+            <DataTemplate>
+                <telerikListView:ListViewTemplateCell>
+                    <telerikListView:ListViewTemplateCell.View>
+                        <Grid BackgroundColor="{StaticResource Key=LightBackgroundColor}" Padding="10, 10, 10, 0">
+                            <Grid.RowDefinitions>
+                              <RowDefinition Height="Auto" />
+                              <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid BackgroundColor="{StaticResource Key=DarkBackgroundColor}" HeightRequest="160">
+                                <ffimageloading:CachedImage Source="{Binding Path=Image, Converter={StaticResource ImageSourceConverter}}" Aspect="AspectFit"
+                                       WidthRequest="160" HeightRequest="160" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Grid>
+
+                            <Label Text="{Binding Path=Name}" Grid.Row="1" Style="{StaticResource Key=ControlExampleNameLabelStyle}" />
+                        </Grid>
+                    </telerikListView:ListViewTemplateCell.View>
+                </telerikListView:ListViewTemplateCell>
+            </DataTemplate>
+        </telerikDataControls:RadListView.ItemTemplate>
+    </telerikDataControls:RadListView>
+</views:ExamplesViewBase>

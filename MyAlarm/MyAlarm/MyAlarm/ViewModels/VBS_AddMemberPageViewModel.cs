@@ -1,10 +1,12 @@
-﻿using Logic;
+﻿using Domain;
+using Logic;
 using MyAlarm.Domain;
 using MyAlarm.EFStandard;
 using MyAlarm.Helpers;
 using MyAlarm.Model;
 using MyAlarm.Views;
 using Prism.Commands;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -56,6 +58,16 @@ namespace MyAlarm.ViewModels
             set { SetProperty(ref _EmailMemberBindProp, value); }
         }
         #endregion
+
+        #region ModeNewBindProp
+        private bool _ModeNewBindProp = false;
+        public bool ModeNewBindProp
+        {
+            get { return _ModeNewBindProp; }
+            set { SetProperty(ref _ModeNewBindProp, value); }
+        }
+        #endregion
+
         #endregion
 
         #region Command
@@ -92,19 +104,41 @@ namespace MyAlarm.ViewModels
                 Email = EmailMemberBindProp,
                 FkRole = "R03"
             };
-            
-            
-            var createMember = await logic.CreateMember(member);
-            
-            
-            IsBusyBindProp = false;
+            try
+            {
+                if (ModeNewBindProp)
+                {
+                    var createMember = await logic.CreateMember(member);
+                }
+                else
+                {
+                    var editMember = await logic.CreateMember(member);
+                }
+            }
+            catch (Exception e )
+            {
+
+                throw e;
+            }
+            finally
+            {
+                IsBusyBindProp = false;
+
+            }
+
+
         }
 
         [Initialize]
         private void InitAddMemberCommand()
         {
-            AddMemberCommand = new DelegateCommand<object>(OnAddMember);
-            AddMemberCommand.ObservesCanExecute(() => IsNotBusyBindProp);
+            AddMemberCommand = new DelegateCommand<object>(OnAddMember, CanAdd);
+            AddMemberCommand.ObservesProperty(() => IsNotBusyBindProp);
+            AddMemberCommand.ObservesProperty(() => NameMemberBindProp);
+            AddMemberCommand.ObservesProperty(() => GenderMemberBindProp);
+            AddMemberCommand.ObservesProperty(() => PhoneNumberMemberBindProp);
+            AddMemberCommand.ObservesProperty(() => EmailMemberBindProp);
+
         }
 
         #endregion
@@ -136,10 +170,32 @@ namespace MyAlarm.ViewModels
 
         #endregion 
 
-       
-
-
         #endregion
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
 
+            switch (parameters.GetNavigationMode())
+            {
+                case NavigationMode.Back:
+                    break;
+                case NavigationMode.New:
+
+ 
+                    if (parameters.ContainsKey(Param.PARAM_MODE))
+                    {
+                        ModeNewBindProp = (bool)parameters[Param.PARAM_MODE];
+
+                    }
+
+                    break;
+                case NavigationMode.Forward:
+                    break;
+                case NavigationMode.Refresh:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
