@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QSF.Views"
+             xmlns:local="clr-namespace:QSF.Examples.TreeViewControl.CustomizationExample"
+             xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls"
+             xmlns:treeView="clr-namespace:Telerik.XamarinForms.DataControls.TreeView;assembly=Telerik.XamarinForms.DataControls"
+             x:Class="QSF.Examples.TreeViewControl.CustomizationExample.CustomizationView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"
+               Margin="20,10"
+               FontSize="20"
+               FontAttributes="Bold"
+               Text="Agencies:" />
+        <telerikDataControls:RadTreeView Grid.Row="1"
+                                         ItemsSource="{Binding Agencies.Continents}"
+                                         views:ThemesBehavior.StyleClass="TelerikTheme">
+            <telerikDataControls:TreeViewDescriptor TargetType="{x:Type local:ContinentViewModel}"
+                                                    DisplayMemberPath="Name"
+                                                    ItemsSourcePath="Countries">
+                <telerikDataControls:TreeViewDescriptor.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="20,0,0,0"
+                              HeightRequest="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <treeView:ExpandCollapseIndicator WidthRequest="40"
+                                                              VerticalOptions="Center"
+                                                              FontSize="Medium"
+                                                              IsLoading="{Binding Path=IsLoading}"
+                                                              IsLoadOnDemandEnabled="{Binding Path=IsLoadOnDemandEnabled}"
+                                                              IsExpanded="{Binding Path=IsExpanded}"
+                                                              IsLeaf="{Binding Path=IsLeaf}"
+                                                              BackgroundColor="Transparent" />
+                            <treeView:ItemText Grid.Column="1"
+                                               VerticalOptions="Center"
+                                               Text="{Binding Item.Name}" />
+                        </Grid>
+                    </DataTemplate>
+                </telerikDataControls:TreeViewDescriptor.ItemTemplate>
+            </telerikDataControls:TreeViewDescriptor>
+            <telerikDataControls:TreeViewDescriptor TargetType="{x:Type local:CountryViewModel}"
+                                                    DisplayMemberPath="Name"
+                                                    ItemsSourcePath="Cities">
+                <telerikDataControls:TreeViewDescriptor.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="40,0,0,0"
+                              HeightRequest="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <treeView:ExpandCollapseIndicator WidthRequest="40"
+                                                              VerticalOptions="Center"
+                                                              FontSize="Medium"
+                                                              IsLoading="{Binding Path=IsLoading}"
+                                                              IsLoadOnDemandEnabled="{Binding Path=IsLoadOnDemandEnabled}"
+                                                              IsExpanded="{Binding Path=IsExpanded}"
+                                                              IsLeaf="{Binding Path=IsLeaf}"
+                                                              BackgroundColor="Transparent" />
+                            <Image Grid.Column="1"
+                                   VerticalOptions="Center"
+                                   Source="{Binding Item.Icon, Converter={StaticResource ImageSourceConverter}}" />
+                            <treeView:ItemText Grid.Column="2"
+                                               Margin="8,0,0,0"
+                                               VerticalOptions="Center"
+                                               Text="{Binding Item.Name}" />
+                        </Grid>
+                    </DataTemplate>
+                </telerikDataControls:TreeViewDescriptor.ItemTemplate>
+            </telerikDataControls:TreeViewDescriptor>
+            <telerikDataControls:TreeViewDescriptor TargetType="{x:Type local:CityViewModel}"
+                                                    DisplayMemberPath="Name">
+                <telerikDataControls:TreeViewDescriptor.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="110,0,0,0"
+                              HeightRequest="40">
+                            <treeView:ItemText VerticalOptions="Center"
+                                               Text="{Binding Item.Name}" />
+                        </Grid>
+                    </DataTemplate>
+                </telerikDataControls:TreeViewDescriptor.ItemTemplate>
+            </telerikDataControls:TreeViewDescriptor>
+        </telerikDataControls:RadTreeView>
+    </Grid>
+</ContentView>
