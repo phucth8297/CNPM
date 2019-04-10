@@ -1,0 +1,2 @@
+MainPackage=C:\_J\F_XF_R\QSF\QSF.UWP\bin\x86\Release\QSF.UWP_2.5.0.0_x86.appx
+SymbolPackage=C:\_J\F_XF_R\QSF\QSF.UWP\AppPackages\QSF.UWP_2.5.0.0_Test\QSF.UWP_2.5.0.0_x86.appxsym

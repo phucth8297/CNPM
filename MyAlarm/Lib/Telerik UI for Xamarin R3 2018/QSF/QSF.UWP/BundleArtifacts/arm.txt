@@ -1,0 +1,7 @@
+MainPackage=C:\_J\F_XF_R\QSF\QSF.UWP\bin\x86\Release\arm\QSF.UWP\QSF.UWP_2.5.0.0_ARM.appx
+SymbolPackage=C:\_J\F_XF_R\QSF\QSF.UWP\AppPackages\QSF.UWP_2.5.0.0_Test\QSF.UWP_2.5.0.0_ARM.appxsym
+ResourcePack=C:\_J\F_XF_R\QSF\QSF.UWP\bin\x86\Release\arm\QSF.UWP\QSF.UWP_2.5.0.0_scale-100.appx
+ResourcePack=C:\_J\F_XF_R\QSF\QSF.UWP\bin\x86\Release\arm\QSF.UWP\QSF.UWP_2.5.0.0_scale-125.appx
+ResourcePack=C:\_J\F_XF_R\QSF\QSF.UWP\bin\x86\Release\arm\QSF.UWP\QSF.UWP_2.5.0.0_scale-150.appx
+ResourcePack=C:\_J\F_XF_R\QSF\QSF.UWP\bin\x86\Release\arm\QSF.UWP\QSF.UWP_2.5.0.0_scale-300.appx
+ResourcePack=C:\_J\F_XF_R\QSF\QSF.UWP\bin\x86\Release\arm\QSF.UWP\QSF.UWP_2.5.0.0_scale-400.appx
